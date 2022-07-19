@@ -17,6 +17,7 @@ reqCategoryList()
 Vue.config.productionTip = false
 new Vue({
   router,
+  // 注册仓库：组件实例的身上会多一个$store属性
   store,
   render: h => h(App)
 }).$mount('#app')
