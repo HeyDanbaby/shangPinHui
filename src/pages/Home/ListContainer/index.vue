@@ -101,6 +101,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: "Listcontainer",
   components: {
@@ -110,12 +112,14 @@ export default {
   data() {
     return {};
   },
-  watch: {},
-  computed: {},
-  methods: {},
-  beforeCreate() {},
-  created() {},
-  mounted() {},
+  mounted() {
+    this.$store.dispatch('getBannerList')
+  },
+  computed: {
+    ...mapState({
+      pageBannerList:state => state.home.bannerList
+    })
+  }
 };
 </script>
 

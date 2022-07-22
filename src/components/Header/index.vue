@@ -44,6 +44,7 @@
             id="autocomplete"
             class="input-error input-xxlarge"
             v-model="keyword"
+            @keyup.enter="goSearch"
           />
           <!-- 点击搜索 跳转到搜索页面  -->
           <!-- 编程式导航 -->
@@ -73,6 +74,7 @@ export default {
   methods: {
     // 搜索按钮的回调函数：需要向search路由进行跳转
     goSearch() {
+      // console.log('测试')
       // 路由传参
       // 第一种：字符串形式
       // ① params参数
@@ -90,11 +92,17 @@ export default {
       // ③ 2种参数结合
       // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
 
-      // 第三种：对象的写法 配置路由时加上params的name属性 
-      // http://127.0.0.1:8080/search/abc?k=abc
-      // this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-
-      //  -----------------------------------------------------------------------------------------------------------------
+      // 第三种：对象的写法 配置路由时加上params的name属性
+      // http://127.0.0.1:8080/search/abc?k=ABC
+      // this.$router.push({name:"search", params:{keyword:this.keyword}, query:{k:this.keyword.toUpperCase()}})
+      let location = {
+        name: "search",
+        params: { keyword: this.keyword || undefined },
+      };
+      if (this.$route.query) {
+        location.query = this.$route.query;
+      }
+      this.$router.push(location);
       // 面试题1：路由传递参数(对象写法)，path是否可以结合params参数一起使用？
       // this.$router.push({path:'/search', params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
       // 答：不可以。路由跳转的时候，对象的写法可以是name、path，但是：path这种写法不能与params参数一起使用
@@ -107,18 +115,16 @@ export default {
       // 如何指定params参数可传可不传？
       // 答：在配置路由的时候，在占位的后面加上一个问号，此时params参数可传可不传。
 
-    // 面试题3：params参数可以传递 也可以不传递，但是如果传递的是空串，如何解决？
+      // 面试题3：params参数可以传递 也可以不传递，但是如果传递的是空串，如何解决？
       // this.$router.push({name:"search", params:{keyword: '' || undefined}, query:{k:this.keyword.toUpperCase()}})
-    // 答：传递空串的时候，URL出现问题，使用undefined解决：params参数传递(空串)
+      // 答：传递空串的时候，URL出现问题，使用undefined解决：params参数传递(空串)
 
-    // 面试题4：路由组件能不能传递props数据  
-    // 答：可以的 有3种写法
-      this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-      console.log(this);   // this：指向的是当前组件的实例 VueComponent{}
-      console.log(this.$router);
-      console.log(this.$route);
-
-
+      // 面试题4：路由组件能不能传递props数据
+      // 答：可以的 有3种写法 推荐函数写法
+      // this.$router.push({name:"search", params:{keyword:this.keyword}, query:{k:this.keyword.toUpperCase()}})
+      // console.log(this);   // this：指向的是当前组件的实例 VueComponent{}
+      // console.log(this.$router);
+      // console.log(this.$route);
     },
   },
 };

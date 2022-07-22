@@ -1,11 +1,11 @@
 <template>
-  <div>我是搜索
+  <div>
+    <TypeNav></TypeNav>
 
-    <h1>params参数-------{{$route.params.keyword}}--------{{keyword}}</h1>
+    <!-- <h1>params参数-------{{$route.params.keyword}}--------{{keyword}}</h1>
     <h1>query参数-------{{$route.query.k}}-----------{{k}}</h1>
-    <!-- <h1>路由传递的props属性里的params参数------{{keyword}}--{{a}}----{{b}}</h1> -->
+    <h1>路由传递的props属性里的params参数------{{keyword}}--{{a}}----{{b}}</h1> -->
   </div>
-
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
   // 路由组件可以传递props
   // props: ['keyword'],
   // props: ['keyword', 'a', 'b'],
-  props: ['keyword', 'k'],
+  // props: ['keyword', 'k'],
   data() {
     return {};
   },

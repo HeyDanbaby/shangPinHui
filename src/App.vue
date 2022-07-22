@@ -16,7 +16,13 @@ export default {
   components: {
     Header,
     Footer,
-  }, 
+  },
+  // 性能优化：APP组件中的回调只会执行一次
+  mounted() {
+    // 把放在TypeNav里的派发的action放在这里，就可以只请求一次
+    // 派发action：获取三级分类列表的数据
+      this.$store.dispatch("categoryList");
+  },
 };
 </script>
 
