@@ -7,6 +7,7 @@
     <Rank/> 
     <Like/> 
     <Floor/> 
+    <Floor/> 
     <Brand/> 
     <!-- <button @click="add">+1</button>
     <span>store里的数据: {{ count }} </span>

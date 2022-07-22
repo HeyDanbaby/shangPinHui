@@ -12,7 +12,6 @@ let originReplace = VueRouter.prototype.replace;
 
 // 2、重新封装push、replace方法: 解决重复跳转报错的问题
 VueRouter.prototype.push = function (location, resolve, reject) {
-  // alert(135);
   if (resolve && reject) {
     originPush.call(this, location, resolve, reject)
   } else {

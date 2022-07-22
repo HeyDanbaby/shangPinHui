@@ -19,5 +19,12 @@
       "imageUrl": "/images/banner3.jpg",
       "linkUrl": "https://dreamlove.top/",
       "sort": 1
+  },
+  {
+      "id": 4,
+      "title": "test",
+      "imageUrl": "/images/banner4.jpg",
+      "linkUrl": "https://dreamlove.top/",
+      "sort": 1
   }
 ]

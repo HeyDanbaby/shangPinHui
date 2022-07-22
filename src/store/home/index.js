@@ -1,10 +1,12 @@
 // home模块的小仓库
 // 引入三级联动、轮播图的请求函数
-import { reqCategoryList, reqGetBannerList } from '@/api'
+import { reqCategoryList, reqGetBannerList, reqGetFloorList } from '@/api'
 
 const state = {
   categoryList: [],
   bannerList: [],
+  floorList: [],
+  
 }
 const mutations = {
   CATEGORYLIST(state, resCategoryList) {
@@ -12,8 +14,12 @@ const mutations = {
     // resCategoryList：服务器请求到的数据
     state.categoryList = resCategoryList
   },
-  BANNERLIST(state, resBannerList){
+  BANNERLIST(state, resBannerList) {
+    console.log('修改bannerList数据');
     state.bannerList = resBannerList
+  },
+  FLOORLIST(state, resFloorList) {
+    state.floorList = resFloorList
   }
 }
 const actions = {
@@ -28,10 +34,19 @@ const actions = {
     }
   },
   // 轮播图数据
-  async getBannerList({commit}) {
+  async getBannerList({ commit }) {
+    console.log('向服务器 获取轮播图数据');
+
     let res = await reqGetBannerList()
-    if(res.code === 200){
+    if (res.code === 200) {
       commit('BANNERLIST', res.data)
+    }
+  },
+  // Floor数据
+  async getFloorList({ commit }) {
+    let res = await reqGetFloorList()
+    if (res.code === 200) {
+      commit('FLOORLIST', res.data)
     }
   }
 }
