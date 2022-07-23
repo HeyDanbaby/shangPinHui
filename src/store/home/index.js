@@ -6,7 +6,6 @@ const state = {
   categoryList: [],
   bannerList: [],
   floorList: [],
-  
 }
 const mutations = {
   CATEGORYLIST(state, resCategoryList) {

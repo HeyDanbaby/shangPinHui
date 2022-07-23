@@ -1,14 +1,13 @@
 <template>
   <div>
     <!-- 使用三级联动的全局组件 全局组件直接使用，不需要引入-->
-    <TypeNav></TypeNav> 
-    <Listcontainer/> 
-    <Recommend/> 
-    <Rank/> 
-    <Like/> 
-    <Floor/> 
-    <Floor/> 
-    <Brand/> 
+    <TypeNav></TypeNav>
+    <Listcontainer />
+    <Recommend />
+    <Rank />
+    <Like />
+    <Floor v-for="(floor, index) in pageFloorList" :key="floor.id" :list="floor"/>
+    <Brand />
     <!-- <button @click="add">+1</button>
     <span>store里的数据: {{ count }} </span>
     <button>-1</button> -->
@@ -35,19 +34,26 @@ export default {
     Floor,
     Brand,
   },
-  props: {},
+  props: {
+
+  },
   data() {
     return {};
   },
   computed: {
-    //  this.$store.state.count
     // ...mapState(["count"]),
+    ...mapState({
+      pageFloorList: (state) => state.home.floorList,
+    }),
   },
   methods: {
     // add() {
     //   // this.$store.dispatch() 执行actions里面的方法
     //   this.$store.dispatch("add", 1);
     // },
+  },
+  mounted() {
+    this.$store.dispatch("getFloorList");
   },
 };
 </script>

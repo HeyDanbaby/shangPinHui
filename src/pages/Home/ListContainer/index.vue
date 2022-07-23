@@ -4,7 +4,8 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <Carousel :carouselComponentList="pageBannerList"></Carousel>
+        <!-- <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
@@ -14,13 +15,13 @@
               <img :src="carousel.imageUrl" />
             </div>
           </div>
-          <!-- 如果需要分页器 -->
+          如果需要分页器
           <div class="swiper-pagination"></div>
 
-          <!-- 如果需要导航按钮 -->
+          如果需要导航按钮
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-        </div>
+        </div> -->
       </div>
       <div class="right">
         <div class="news">
@@ -100,7 +101,7 @@ import { mapState } from "vuex";
 
 // Swiper使用步骤：
 // 第一步：加载插件，引入js和css包（swiper.js和swiper.css）。
-import Swiper from "swiper";
+// import Swiper from "swiper";
 
 // 第二步：在newSwiper实例之前，页面中的结构必须要先提前准备好。
 // 第三步：(页面中务必要有结构) new Swiper(swiperContainer, parameters)；第一个参数可以是字符串，也可以是真实的DOM节点
@@ -136,30 +137,31 @@ export default {
     // }, 2000);
   },
   // 实现Swiper最完美的方案：watch+nextTick
-  watch: {
-    pageBannerList: {
-      handler(newValue, oldValue) {
-        console.log("pageBannerList数据已经变化了");
-        this.$nextTick(() => {
-          var mySwiper = new Swiper(".swiper-container", {
-            // direction: "vertical", // 垂直切换选项
-            // 不设置，默认水平切换选项
-            loop: true, // 循环模式选项
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true, // 点击小圆球的时候也切换图片
-            },
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
-    },
-  },
+  // watch: {
+  //   pageBannerList: {
+  //     immediate: true,
+  //     handler(newValue, oldValue) {
+  //       console.log("pageBannerList数据已经变化了");
+  //       this.$nextTick(() => {
+  //         var mySwiper = new Swiper(".swiper-container", {
+  //           // direction: "vertical", // 垂直切换选项
+  //           // 不设置，默认水平切换选项
+  //           loop: true, // 循环模式选项
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //             clickable: true, // 点击小圆球的时候也切换图片
+  //           },
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+  //         });
+  //       });
+  //     },
+  //   },
+  // },
   computed: {
     ...mapState({
       pageBannerList: (state) => state.home.bannerList,
