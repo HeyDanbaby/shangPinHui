@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/pages/Home/index.vue'
-import Search from '@/pages/Search/index.vue'
-import Register from '@/pages/Register/index.vue'
-import Login from '@/pages/Login/index.vue'
+import Home from '@/views/Home/index.vue'
+import Search from '@/views/Search/index.vue'
+import Register from '@/views/Register/index.vue'
+import Login from '@/views/Login/index.vue'
 
 // 1、先把VueRouter原型对象的push，先保存一份
 let originPush = VueRouter.prototype.push;

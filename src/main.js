@@ -27,5 +27,9 @@ new Vue({
   router,
   // 注册仓库：组件实例的身上会多一个$store属性
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate() {
+    // 配置全局事件总线 $bus
+    Vue.prototype.$bus = this;
+  },
 }).$mount('#app')
