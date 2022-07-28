@@ -11,12 +11,16 @@ import 'swiper/css/swiper.css'
 
 // 引入三级联动组件-----全局组件
 import TypeNav from '@/components/TypeNav'
-// 引入Carousel-------全局组件
+// 引入Carousel轮播图-------全局组件
 import Carousel from '@/components/Carousel'
+// 引入Pagination分页器------全局组件
+import Pagination from '@/components/Pagination'
+
 
 // 注册全局组件
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Carousel.name, Carousel)
+Vue.component(Pagination.name, Pagination)
 // 测试三级联动接口发送请求是否成功
 // import {reqCategoryList} from '@/api/index.js'
 // reqCategoryList()
