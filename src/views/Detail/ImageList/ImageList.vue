@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
+      <div class="swiper-slide" v-for="(slide, index) in SonSkuImageList" :key="">
         <img src="../images/s1.png">
       </div>
     </div>
@@ -15,6 +15,7 @@
   import Swiper from 'swiper'
   export default {
     name: "ImageList",
+    props: ['SonSkuImageList']
   }
 </script>
 

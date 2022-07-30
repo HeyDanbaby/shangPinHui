@@ -7,31 +7,30 @@
     <section class="con">
       <!-- 导航路径区域 -->
       <div class="conPoin">
-        <span>手机、数码、通讯</span>
-        <span>手机</span>
-        <span>Apple苹果</span>
-        <span>iphone 6S系类</span>
+        <span v-show="pageCategoryView.category1Name">{{pageCategoryView.category1Name}}</span>
+        <span v-show="pageCategoryView.category2Name">{{pageCategoryView.category2Name}}</span>
+        <span v-show="pageCategoryView.category3Name">{{pageCategoryView.category3Name}}</span>
       </div>
       <!-- 主要内容区域 -->
       <div class="mainCon">
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom :SonSkuImageList="ParentSkuImageList"/>
           <!-- 小图列表 -->
-          <ImageList />
+          <ImageList :SonSkuImageList="ParentSkuImageList"/>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
-            <h3 class="InfoName">Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机</h3>
-            <p class="news">推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</p>
+            <h3 class="InfoName">{{pageSkuInfo.skuName}}</h3>
+            <p class="news">{{pageSkuInfo.skuDesc}}</p>
             <div class="priceArea">
               <div class="priceArea1">
                 <div class="title">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</div>
                 <div class="price">
                   <i>¥</i>
-                  <em>5299</em>
+                  <em>{{pageSkuInfo.price}}</em>
                   <span>降价通知</span>
                 </div>
                 <div class="remark">
@@ -349,6 +348,8 @@
 <script>
   import ImageList from './ImageList/ImageList'
   import Zoom from './Zoom/Zoom'
+  import {mapGetters} from 'vuex'
+
 
   export default {
     name: 'Detail',
@@ -359,7 +360,14 @@
     mounted() {
       // 派发action 获取产品详情的信息
       this.$store.dispatch('getGoodsInfo', this.$route.params.skuid)
+    },
+    computed: {
+      ...mapGetters(['pageCategoryView', 'pageSkuInfo']),
 
+      // 给子组件zoom的数据
+      ParentSkuImageList() {
+        return this.pageSkuInfo.skuImageList || []  // 至少是给一个空数组，避免找不到定义报错
+      }
     }
   }
 </script>
