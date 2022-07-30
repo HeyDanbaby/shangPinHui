@@ -27,7 +27,12 @@
               }}<i @click="removeTrademark">×</i>
             </li>
             <!-- 品牌属性值展示的面包屑 -->
-            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">{{attrValue.split(":")[1]}}<i @click="removeAttrs(index)">×</i>
+            <li
+              class="with-x"
+              v-for="(attrValue, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrValue.split(":")[1] }}<i @click="removeAttrs(index)">×</i>
             </li>
           </ul>
         </div>
@@ -45,10 +50,10 @@
             <div class="navbar-inner filter">
               <ul class="sui-nav">
                 <!-- order:1综合   order:2价格 -->
-                <li :class="{active:isOrderOne}">
+                <li :class="{ active: isOrderOne }">
                   <a>综合<span v-show="isOrderOne"></span></a>
                 </li>
-                <li :class="{active:isOrderTwo}">
+                <li :class="{ active: isOrderTwo }">
                   <a>价格<span v-show="isOrderTwo"></span></a>
                 </li>
               </ul>
@@ -64,9 +69,8 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="good.defaultImg"
-                    /></a>
+                    <!-- 在路由跳转的时候 一定要带上params参数：商品的id -->
+                    <router-link :to="`detail/${good.id}`"><img :src="good.defaultImg"/></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -101,7 +105,13 @@
             </ul>
           </div>
           <!-- 分页器 测试阶段-->
-          <Pagination :pageNo="8" :pageSize="3" :total="91" :continues="5"></Pagination>
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="parentGetPageNo"
+          ></Pagination>
         </div>
       </div>
     </div>
@@ -111,7 +121,7 @@
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
 // import {mapState} from 'vuex'
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "Search",
@@ -130,7 +140,7 @@ export default {
         keyword: "", // 关键字
         order: "1:desc", // 排序 初始状态：综合1：降序desc
         pageNo: 1, // 分页器参数，当前第几页
-        pageSize: 10, // 每一页展示数据的个数
+        pageSize: 3, // 每一页展示数据的个数
         props: [], // 平台售卖商品的属性
         trademark: "", // 品牌
       },
@@ -155,14 +165,18 @@ export default {
   computed: {
     // ...mapState({pageSearchList: state => state.search.searchList})
     ...mapGetters(["pageGoodsList"]),
-    // 综合排序 
+    // 综合排序
     isOrderOne() {
-      return this.searchParams.order.indexOf('1') !== -1
+      return this.searchParams.order.indexOf("1") !== -1;
     },
     // 价格排序
     isOrderTwo() {
-      return this.searchParams.order.indexOf('2') !== -1
-    }
+      return this.searchParams.order.indexOf("2") !== -1;
+    },
+    // 获取search展示的产品一共多少条数据
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
   },
   methods: {
     getData() {
@@ -212,18 +226,27 @@ export default {
       // ['属性ID:属性值:属性名']
       // console.log(attrs, attrValue);
       // 整理参数带给服务器 - 参数的格式：数组
-      let props = `${attrs.attrId}:${attrValue}:${attrs.attrName}`
+      let props = `${attrs.attrId}:${attrValue}:${attrs.attrName}`;
       // this.searchParams.props.push(props)
       // 数组去重
-      if(this.searchParams.props.indexOf(props) == -1) {
-        this.searchParams.props.push(props)
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
       }
-      this.getData()
+      this.getData();
     },
     // 删除商品选择的属性值
     removeAttrs(index) {
-      this.searchParams.props.splice(index, 1)
+      this.searchParams.props.splice(index, 1);
+      this.getData();
+    },
+    // 自定义事件，获取当前第几页
+    parentGetPageNo(pageNo) {
+      // console.log(pageNo);
+      // 整理带给服务器的参数
+      this.searchParams.pageNo = pageNo
+      // 再次发请求
       this.getData()
+
     }
   },
   watch: {
