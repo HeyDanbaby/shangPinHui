@@ -19,11 +19,17 @@ const actions = {
 }
 const getters = {
   // 简化数据
+  // 路径导航
   pageCategoryView(state) {
     return state.goodsInfo.categoryView || {} // 一定要或者返回一个空对象 避免里面的属性找不到报错
   },
+  // 产品信息
   pageSkuInfo(state) {
     return state.goodsInfo.skuInfo || {}  // 一定要或者返回一个空对象 避免里面的属性找不到报错
+  },
+  // 产品售卖属性
+  pageSpuSaleAttrList(state) {
+    return state.goodsInfo.spuSaleAttrList || []
   }
 }
 export default {

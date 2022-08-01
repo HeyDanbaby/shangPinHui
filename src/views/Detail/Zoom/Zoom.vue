@@ -1,11 +1,13 @@
 <template>
   <div class="spec-preview">
     <img :src="imgObj.imgUrl" />
-    <div class="event"></div>
+    <div class="event" @mousemove="handler"></div>
+    <!-- 大图 -->
     <div class="big">
-      <img :src="imgObj.imgUrl" />
+      <img :src="imgObj.imgUrl" ref="big" />
     </div>
-    <div class="mask"></div>
+    <!-- 遮罩层 -->
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
@@ -13,9 +15,48 @@
 export default {
   name: "Zoom",
   props: ["SonSkuImageList"],
+  data() {
+    return {
+      currentIndex: 0,
+    };
+  },
+  mounted() {
+    this.$bus.$on("getIndex", (index) => {
+      this.currentIndex = index;
+    });
+  },
   computed: {
     imgObj() {
-      return this.SonSkuImageList[0] || {};  // 至少返回一个空对象，避免出现imgUrl找不到定义报错
+      return this.SonSkuImageList[this.currentIndex] || {}; // 至少返回一个空对象，避免出现imgUrl找不到定义报错
+    },
+  },
+  methods: {
+    handler(event) {
+      // console.log(event);  // 鼠标移到事件
+      // console.log(this.$refs.mask); // 获取mask元素
+      let mask = this.$refs.mask;
+      let big = this.$refs.big;
+      let left = event.offsetX - mask.offsetWidth / 2;
+      let top = event.offsetY - mask.offsetHeight / 2;
+      // 限制移动的范围
+      if (left <= 0) {
+        left = 0;
+      }
+      if (left >= mask.offsetWidth) {
+        left = mask.offsetWidth;
+      }
+      if (top <= 0) {
+        top = 0;
+      }
+      if (top >= mask.offsetHeight) {
+        top = mask.offsetHeight;
+      }
+      // 修改鼠标的left/top属性值
+      mask.style.left = left + "px";
+      mask.style.top = top + "px";
+      // 移动到哪大图就显示哪
+      big.style.left = -2 * left + "px";
+      big.style.top = -2 * top + "px";
     },
   },
 };
